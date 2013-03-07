@@ -1,48 +1,4 @@
-require ["cs!remcoaudio"], (remcoAudio) -> $ ->
-  maxDial = 10000
-  
-  dial = (sel, c) ->
-    ($ sel).dial
-      flatMouse: yes
-      width: 100
-      displayInput: no
-      angleArc:270
-      angleOffset:225
-      max: maxDial
-      change: c
-
-  getDialVal = (sel) ->
-    v = ($ sel)?[0]?.value
-    if v? then v/maxDial else 0
-
-  dialFuncLink = (sel, f, scale) ->
-    scale ?= (v) -> v
-    dial sel, (v) -> f scale (v/maxDial)
-    f scale getDialVal sel
-
-  dialParamLink = (sel, p, scale) ->
-    dialFuncLink sel,
-      ((v) -> p.value = v), scale
-
-  dialRangeLink = (valSel, rangeSel, param, ranges, vScale) ->
-    vScale ?= (v) -> v
-    calc = (r) -> (v) ->
-      # range value
-      rV = if r then v else (getDialVal rangeSel)
-      # "value" value
-      vV = if r then (getDialVal valSel) else v
-      range = Math.floor rV * (ranges.length - .001)
-      ranges[range] * vScale vV
-    dialParamLink valSel, param, calc no
-    dialParamLink rangeSel, param, calc yes
-
-  logScale = (min, max, base) ->
-    base ?= 2
-    l = (x) -> (Math.log x)/(Math.log base)
-    logmin = l min
-    logmax = l max
-    (v) ->
-      Math.pow(base, v * (logmax - logmin) + logmin)
+require ["cs!remcoaudio", "cs!dialUtils"], (remcoAudio, dial) -> $ ->
 
   getMixerState = ->
     m = (i) -> Math.pow(2, i) * ~~(($ "#mixer#{i}")[0].value)
@@ -53,24 +9,21 @@ require ["cs!remcoaudio"], (remcoAudio) -> $ ->
 
   remco = remcoAudio()
 
-  dialParamLink '#volume', remco.volume
-  dialRangeLink '#vcoFreq',
+  dial.paramLink '#volume', remco.volume
+  dial.rangeLink '#vcoFreq',
     '#vcoRange',
     remco.vco,
     [100, 400, 1000, 5000],
-    logScale .1, 1
-  dialParamLink '#slfmod', remco.vcomod, (v) -> 50 + 980 * v
-
-  dialRangeLink '#slfFreq',
+    dial.logScale .1, 1
+  dial.paramLink '#vcomod', remco.vcomod, (v) -> 50 + 980 * v
+  dial.rangeLink '#slfFreq',
     '#slfRange',
     remco.slf,
     [1,10,100,5000],
-    logScale .1, 1
-
-  dialParamLink '#noise', remco.noise, (logScale 50, 10000)
-
-  dialParamLink '#attack', remco.attack, (logScale .1, 3)
-  dialParamLink '#decay', remco.decay, (logScale .1, 3)
+    dial.logScale .1, 1
+  dial.paramLink '#noise', remco.noise, (dial.logScale 50, 10000)
+  dial.paramLink '#attack', remco.attack, (dial.logScale .1, 3)
+  dial.paramLink '#decay', remco.decay, (dial.logScale .1, 3)
 
   syncMixer = -> remco.setMixerState getMixerState()
   $('.mixer').change syncMixer
@@ -79,5 +32,83 @@ require ["cs!remcoaudio"], (remcoAudio) -> $ ->
   syncOneShot = -> remco.setOneShotState getOneShotState()
   $('#oneshotstate').change syncOneShot
   syncOneShot()
+  $('#oneshot').click remco.triggerOneShot
 
-  $("#oneshot").click remco.triggerOneShot
+  # preset logic
+  dialParams =
+    volume: 'v'
+    vcoFreq: 'f'
+    vcoRange: 'r'
+    vcomod: 'm'
+    slfFreq: 'sf'
+    slfRange: 'sr'
+    noise: 'n'
+    attack: 'a'
+    decay: 'd'
+             
+  selectParams =
+    oneshotstate: 'o'
+    mixer0: 'm0'
+    mixer1: 'm1'
+    mixer2: 'm2'
+
+  applyPreset = (p) ->
+    for d,k of dialParams
+      dial.setVal "##{d}", p[k]
+    for s,k of selectParams
+      ($ "##{s}").val(p[k]).trigger 'change'
+
+  createPreset = () ->
+    p = {}
+    for d,k of dialParams
+      p[k] = dial.getVal "##{d}"
+    for s,k of selectParams
+      p[k] = ~~($ "##{s}").val()
+    p
+
+  defaultPreset =
+    volume: .2
+    vcoFreq: .4
+    vcoRange: .5
+    vcomod: .2
+    slfFreq: .8
+    slfRange: .7
+    noise: .6
+    attack: .3
+    decay: .8
+    oneshotstate: 1
+    mixer0: 1
+    mixer1: 0
+    mixer2: 1
+  
+  getPresetFromURL = ->
+    href = window.location.href
+    qs = (href.slice (href.indexOf '?') + 1).split '&'
+    p = {}
+    for q in qs
+      qsplit = q.split '='
+      p[decodeURIComponent qsplit[0]] = parseFloat decodeURIComponent qsplit[1]
+    p
+    
+  getURLFromPreset = (p) ->
+    href = window.location.href
+    i = href.indexOf '?'
+    href = href[0...i] if i?
+    href += '?'
+    for k,v of p
+      href += encodeURIComponent k
+      href += '='
+      href += encodeURIComponent v
+      href += '&'
+    href[0...href.length - 1]
+
+  preset = getPresetFromURL() ? defaultPreset
+  for d,k of dialParams
+    preset[k] ?= defaultPreset[d]
+  for s,k of selectParams
+    preset[k] ?= defaultPreset[s]
+
+  applyPreset preset
+        
+  ($ '#createShareURL').click ->
+    ($ '#shareURL').html(getURLFromPreset createPreset())
