@@ -11,7 +11,8 @@ define ["cs!pitchednoise"], (createNoise) -> ->
   
   amp = audio.createGain()
   amp.connect output
-
+  amp.gain.value = 0
+  
   # this represents the main VCO of the remco.
   # it's a square wave.
   vco = audio.createOscillator()
@@ -75,8 +76,26 @@ define ["cs!pitchednoise"], (createNoise) -> ->
       when 5 then doSubGate slfAudio, noise, vco
       when 6 then doGate slfAudio, vco
       # 7 is "off"
-      
 
+  oneShotState = off
+  setOneShotState = (oneShot) ->
+    oneShotState = oneShot
+    if oneShot
+      amp.gain.cancelScheduledValues audio.currentTime
+      amp.gain.setValueAtTime 0, audio.currentTime
+    else
+      amp.gain.cancelScheduledValues audio.currentTime
+      amp.gain.setValueAtTime 1, audio.currentTime
+
+  attack = {value: 1}
+  decay = {value: 1}
+  triggerOneShot = ->
+    if oneShotState
+      amp.gain.setValueAtTime 0, audio.currentTime
+      amp.gain.linearRampToValueAtTime 1, audio.currentTime + attack.value
+      amp.gain.linearRampToValueAtTime 0,
+        audio.currentTime + attack.value + decay.value
+  
   # return a collection of exposed parameters
   {
     volume: output.gain
@@ -84,5 +103,9 @@ define ["cs!pitchednoise"], (createNoise) -> ->
     slf: slf.frequency
     vcomod: vcomod.gain
     noise: noise.frequency
+    attack: attack
+    decay: decay
     setMixerState: setMixerState
+    setOneShotState: setOneShotState
+    triggerOneShot: triggerOneShot
   }

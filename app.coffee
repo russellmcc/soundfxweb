@@ -48,6 +48,9 @@ require ["cs!remcoaudio"], (remcoAudio) -> $ ->
     m = (i) -> Math.pow(2, i) * ~~(($ "#mixer#{i}")[0].value)
     (m 0) + (m 1) + (m 2)
 
+  getOneShotState = ->
+    ~~($ '#oneshotstate')[0].value
+
   remco = remcoAudio()
 
   dialParamLink '#volume', remco.volume
@@ -66,7 +69,15 @@ require ["cs!remcoaudio"], (remcoAudio) -> $ ->
 
   dialParamLink '#noise', remco.noise, (logScale 50, 10000)
 
-  remco.setMixerState getMixerState()
+  dialParamLink '#attack', remco.attack, (logScale .1, 3)
+  dialParamLink '#decay', remco.decay, (logScale .1, 3)
 
-  $(".mixerswitch").change -> remco.setMixerState getMixerState()
-    
+  syncMixer = -> remco.setMixerState getMixerState()
+  $('.mixer').change syncMixer
+  syncMixer()
+
+  syncOneShot = -> remco.setOneShotState getOneShotState()
+  $('#oneshotstate').change syncOneShot
+  syncOneShot()
+
+  $("#oneshot").click remco.triggerOneShot
