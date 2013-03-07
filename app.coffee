@@ -50,7 +50,7 @@ require ["cs!remcoaudio"], (remcoAudio) -> $ ->
 
   remco = remcoAudio()
 
-  dialParamLink '#gain', remco.amp
+  dialParamLink '#volume', remco.volume
   dialRangeLink '#vcoFreq',
     '#vcoRange',
     remco.vco,

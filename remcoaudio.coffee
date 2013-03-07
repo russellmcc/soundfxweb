@@ -6,8 +6,11 @@ define ["cs!pitchednoise"], (createNoise) -> ->
   audio = new webkitAudioContext()
 
   # final gain stage
+  output = audio.createGain()
+  output.connect audio.destination
+  
   amp = audio.createGain()
-  amp.connect audio.destination
+  amp.connect output
 
   # this represents the main VCO of the remco.
   # it's a square wave.
@@ -76,7 +79,7 @@ define ["cs!pitchednoise"], (createNoise) -> ->
 
   # return a collection of exposed parameters
   {
-    amp: amp.gain
+    volume: output.gain
     vco: vco.frequency
     slf: slf.frequency
     vcomod: vcomod.gain
