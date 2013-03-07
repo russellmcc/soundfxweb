@@ -1,4 +1,4 @@
-define ["cs!pitchednoise"], (createNoise) -> $ ->
+require ["cs!remcoaudio"], (remcoAudio) -> $ ->
   maxDial = 10000
   
   dial = (sel, c) ->
@@ -44,47 +44,29 @@ define ["cs!pitchednoise"], (createNoise) -> $ ->
     (v) ->
       Math.pow(base, v * (logmax - logmin) + logmin)
 
-  audio = new webkitAudioContext()
+  getMixerState = ->
+    m = (i) -> Math.pow(2, i) * ~~(($ "#mixer#{i}")[0].value)
+    (m 0) + (m 1) + (m 2)
 
-  # final gain stage
-  amp = audio.createGain()
-  amp.connect audio.destination
+  remco = remcoAudio()
 
-  dialParamLink '#gain', amp.gain
-
-  # this represents the main VCO of the remco.
-  # it's a square wave.
-  vco = audio.createOscillator()
-  vco.type = vco.SQUARE
-  vco.connect amp
-  vco.start 0
-
+  dialParamLink '#gain', remco.amp
   dialRangeLink '#vcoFreq',
     '#vcoRange',
-    vco.frequency,
+    remco.vco,
     [100, 400, 1000, 5000],
     logScale .1, 1
-
-  # this controls the modulation routing from the SLF to the vco.
-  slf_mod = audio.createGain()
-  slf_mod.connect vco.frequency
-
-  dialParamLink '#slfmod', slf_mod.gain, (v) -> 50 + 980 * v
-
-  # this is the so-called "super low frequency" oscillator
-  slf = audio.createOscillator()
-  slf.type = slf.TRIANGLE
-  slf.connect slf_mod
-  slf.start 0
+  dialParamLink '#slfmod', remco.vcomod, (v) -> 50 + 980 * v
 
   dialRangeLink '#slfFreq',
     '#slfRange',
-    slf.frequency,
+    remco.slf,
     [1,10,100,5000],
     logScale .1, 1
 
-  noise = createNoise audio
-  noise.connect amp
+  dialParamLink '#noise', remco.noise, (logScale 50, 10000)
 
-  dialParamLink '#noise', noise.pitch, (logScale 50, 10000)
-  
+  remco.setMixerState getMixerState()
+
+  $(".mixerswitch").change -> remco.setMixerState getMixerState()
+    

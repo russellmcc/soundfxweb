@@ -4,16 +4,16 @@ define [], ->
   globalID = 0
   
   (audio) ->
-    # this controls the "pitch" of the noise.
+    # this controls the "frequency" of the noise.
     n = audio.createScriptProcessor(1024, 0, 1)
     n._out = 0
     n._phasor = 0
-    n.pitch = {value: 100}
+    n.frequency = {value: 100}
 
     n.onaudioprocess = (e) ->
-      # period in samples is the sample rate / pitch.
+      # period in samples is the sample rate / frequency.
       buffer = e.outputBuffer
-      period = buffer.sampleRate / n.pitch.value
+      period = buffer.sampleRate / n.frequency.value
 
       channels = for i in [0...buffer.numberOfChannels]
         buffer.getChannelData(i)
