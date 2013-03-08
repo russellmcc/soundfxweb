@@ -5,7 +5,6 @@
     },
     dir: "build",
     stubModules: ['cs'],
-    optimize:"none",
     modules: [
         {
             name: "main",
