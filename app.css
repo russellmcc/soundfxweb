@@ -11,13 +11,11 @@ article, aside, figure, footer, header, hgroup, menu, nav, section {
     font-weight: normal;
     color:inherit;
 }
-
 body {
     background: #444;
     font-family: futura, comic sans MS, comic sans, marker felt, papyrus, sans-serif;
     text-align: center;
 }
-
 #container {
     background: #000;
     -webkit-user-select: none;
@@ -29,18 +27,15 @@ body {
     margin-top:20px;
     margin-bottom:20px;
 }
-
 #container2 {
     max-width:700px
     margin:auto;
 }
-
 .outer
 {
     display:inline-block;
     text-align:left;
 }
-
 .inner {
     color: black;
     border-radius:30px;
@@ -48,11 +43,9 @@ body {
     min-height:150px;
     text-align: center;
 }
-
 span {
     display:inline;
 }
-
 .knob-label,
 .mixer-label
 {
@@ -62,12 +55,10 @@ span {
     vertical-align:middle;
     margin: 15px;
 }
-
 .knob-label
 {
     max-width:100px;
 }
-
 .labels,
 .label-mid
 {
@@ -90,7 +81,6 @@ span {
     float:left;
     margin-right:auto;
 }
-
 .knob-label
 div:after
 {
@@ -98,43 +88,36 @@ div:after
     content: " ";
     visibility:hidden;
 }
-
 #mixers,
 #sound
 {
     color: rgb(235, 195, 32);
 }
-
 #mixers-inner,
 #sound-inner
 {
     background: rgb(235,195,32);
 }
-
 #one-shot,
 #tone
 {
     color: rgb(70,181,222);
 }
-
 #one-shot-inner,
 #tone-inner
 {
     background:rgb(70,181,222);
 }
-
 #fade-out,
 #speed
 {
     color: rgb(105,178,75);
 }
-
 #fade-out-inner,
 #speed-inner
 {
     background: rgb(105,178,75);
 }
-
 input[type="checkbox"],
 .button
 {
@@ -152,22 +135,18 @@ input[type="checkbox"],
     position: relative;
     line-height: 0;
 }
-
 input[type="checkbox"]:checked
 {
     background:#222;
 }
-
 input[type="checkbox"]:hover
 {
     background:#DDD;
 }
-
 input[type="checkbox"]:checked:hover
 {
     background:#444;
 }
-
 .button:hover
 {
     background:#222;
@@ -176,14 +155,12 @@ input[type="checkbox"]:checked:hover
 {
     background:#000;
 }
-
 #share {
     margin:auto;
     width:50%;
     color: white;
     text-align: left;
 }
-
 #share-inner {
     overflow:scroll;
     white-space:pre;
