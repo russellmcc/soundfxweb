@@ -66,21 +66,6 @@ require ["cs!remcoaudio", "cs!dialUtils"], (remcoAudio, dial) -> $ ->
       p[k] = ~~($ "##{s}").val()
     p
 
-  defaultPreset =
-    volume: .2
-    vcoFreq: .4
-    vcoRange: .5
-    vcomod: .2
-    slfFreq: .8
-    slfRange: .7
-    noise: .6
-    attack: .3
-    decay: .8
-    oneshotstate: 1
-    mixer0: 1
-    mixer1: 0
-    mixer2: 1
-  
   getPresetFromURL = ->
     href = window.location.href
     qs = (href.slice (href.indexOf '?') + 1).split '&'
@@ -102,13 +87,47 @@ require ["cs!remcoaudio", "cs!dialUtils"], (remcoAudio, dial) -> $ ->
       href += '&'
     href[0...href.length - 1]
 
-  preset = getPresetFromURL() ? defaultPreset
-  for d,k of dialParams
-    preset[k] ?= defaultPreset[d]
-  for s,k of selectParams
-    preset[k] ?= defaultPreset[s]
+  # update the share url and localStorage whenever anything changes
+  savePreset = (p) ->
+    ($ '#shareURL').html(getURLFromPreset p)
+    (localStorage[k] = v) for k,v of p
+        
+  dial.globalChangeHook = (sel, v) ->
+    p = createPreset()
+    p[dialParams[sel[1...sel.length]]] = v
+    savePreset p
+  ($ '.switch').change ->
+    savePreset createPreset()
+    
+  # sensible defaults
+  defaultPreset =
+    volume: .2
+    vcoFreq: .4
+    vcoRange: .5
+    vcomod: .2
+    slfFreq: .8
+    slfRange: .7
+    noise: .6
+    attack: .3
+    decay: .8
+    oneshotstate: 1
+    mixer0: 1
+    mixer1: 0
+    mixer2: 1
+
+  preset = {}
+
+  # update with localstorage and the url Preset
+  urlPreset = getPresetFromURL()
+  
+  updateForKey = (dk, k) ->
+    preset[k] = defaultPreset[dk]
+    preset[k] = localStorage[k] if localStorage?[k]?
+    preset[k] = urlPreset[k] if urlPreset[k]?
+    
+  updateForKey d,k for d,k of dialParams
+  updateForKey s,k for s,k of selectParams
 
   applyPreset preset
-        
-  ($ '#createShareURL').click ->
-    ($ '#shareURL').html(getURLFromPreset createPreset())
+
+    

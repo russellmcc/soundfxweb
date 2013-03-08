@@ -17,12 +17,16 @@ define [], ->
       max: maxDial
       change: (v) ->
         c v/maxDial
+        e.globalChangeHook?(sel, v/maxDial)
         yes
-    ($ sel)[0].sync = -> c e.getVal sel
+    ($ sel)[0].sync = ->
+      c e.getVal sel
+      e.globalChangeHook?(sel, e.getVal sel)
 
   e.setVal = (sel, v) ->
     (($ sel).val v * maxDial).trigger 'change'
     ($ sel)[0].sync()
+    
     
   e.funcLink = (sel, f, scale) ->
     scale ?= (v) -> v
