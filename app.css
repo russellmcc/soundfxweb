@@ -27,7 +27,8 @@ body {
     margin-top:20px;
     margin-bottom:20px;
 }
-#loading {
+#loading,
+#touchToStart {
     width:100%;
     height:100%;
     position:fixed;
@@ -38,7 +39,8 @@ body {
     z-index:1000;
     color: #FFF;
 }
-#loadingTxt {
+#loadingTxt,
+#touchTxt {
     display:inline-block;
     position: absolute;
     top: 50%;
@@ -174,9 +176,9 @@ input[type="checkbox"]:checked:hover
 }
 #share {
     margin:auto;
-    width:50%;
+    width:70%;
     color: white;
-    text-align: left;
+    text-align: center;
 }
 #share-inner {
     overflow:scroll;
