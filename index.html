@@ -9,7 +9,7 @@
 <body>
   <div id="container2">
     <div id="container">
-      <div id="mixers">
+      <div id="mixers" class="outer">
         <h2>MIXERS</h2>
         <div id="mixers-inner" class="inner">
           <div class="mixer-label">
@@ -26,12 +26,14 @@
           </div>
           <div class="knob-label">
             <input class="dial" type="text" value="7500" id="volume"></input>
-            <span class="label-left">lo</span>
-            <span class="label-right">hi</span>
+            <div class="labels">
+              <span class="label-left">lo</span>
+              <span class="label-right">hi</span>
+            </div>
           </div>
         </div>
       </div>
-      <div id="one-shot">
+      <div id="one-shot" class="outer">
         <h2>ONE SHOT</h2>
         <div id="one-shot-inner" class="inner">
           <div class="mixer-label">
@@ -44,22 +46,26 @@
           </div>
           <div class="knob-label">
             <input class="dial" type="text" value="7500" id="attack"></input>
-            <span class="label-left">short</span>
-            <span class="label-right">long</span>
+            <div class="labels">
+              <span class="label-left">short</span>
+              <span class="label-right">long</span>
+            </div>
           </div>
         </div>
       </div>
-      <div id="fade-out">
+      <div id="fade-out" class="outer">
         <h2>FADE OUT</h2>
         <div id="fade-out-inner" class="inner">
           <div class="knob-label">
             <input class="dial" type="text" value="7500" id="decay"></input>
-            <span class="label-left">short</span>
-            <span class="label-right">long</span>
+            <div class="labels">
+              <span class="label-left">short</span>
+              <span class="label-right">long</span>
+            </div>
           </div>
         </div>
       </div>
-      <div id="speed">
+      <div id="speed" class="outer">
         <h2>SPEED</h2>
         <div id="speed-inner" class="inner">
           <div class="knob-label">
@@ -68,22 +74,26 @@
           </div>
           <div class="knob-label">
             <input class="dial" type="text" value="7500" id="vcoFreq"></input>
-            <span class="label-left">slow</span>
-            <span class="label-right">fast</span>
+            <div class="labels">
+              <span class="label-left">slow</span>
+              <span class="label-right">fast</span>
+            </div>
           </div>
         </div>
       </div>
-      <div id="sound">
+      <div id="sound" class="outer">
         <h2>SOUND</h2>
         <div id="sound-inner" class="inner">
           <div class="knob-label">
             <input class="dial" type="text" value="7500" id="noise"></input>
-            <span class="label-left">lo</span>
-            <span class="label-right">hi</span>
+            <div class="labels">
+              <span class="label-left">lo</span>
+              <span class="label-right">hi</span>
+            </div>
           </div>
         </div>
       </div>
-      <div id="tone">
+      <div id="tone" class="outer">
         <h2>TONE</h2>
         <div id="tone-inner" class="inner">
           <div class="knob-label">
@@ -92,8 +102,10 @@
           </div>
           <div class="knob-label">
             <input class="dial" type="text" value="7500" id="slfFreq"></input>
-            <span class="label-left">lo</span>
-            <span class="label-right">hi</span>
+            <div class="labels">
+              <span class="label-left">lo</span>
+              <span class="label-right">hi</span>
+            </div>
           </div>
         </div>
       </div>

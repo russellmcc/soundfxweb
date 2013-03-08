@@ -13,16 +13,14 @@ article, aside, figure, footer, header, hgroup, menu, nav, section {
 }
 
 body {
-    text-align:center;
     background: #444;
-    font-family: futura;
-
+    font-family: futura, comic sans MS, comic sans, marker felt, papyrus, sans-serif;
+    text-align: center;
 }
 
 #container {
     background: #000;
     -webkit-user-select: none;
-    text-align:center;
     max-width: 700px;
     border-radius:20px;
     margin:auto;
@@ -37,12 +35,18 @@ body {
     margin:auto;
 }
 
+.outer
+{
+    display:inline-block;
+    text-align:left;
+}
+
 .inner {
     color: black;
     border-radius:30px;
     display:inline-block;
     min-height:150px;
-    text-algin: center;
+    text-align: center;
 }
 
 span {
@@ -55,6 +59,7 @@ span {
     display: inline-block;
     position:relative;
     text-align:center;
+    vertical-align:middle;
     margin: 15px;
 }
 
@@ -63,12 +68,12 @@ span {
     max-width:100px;
 }
 
-.label-left,
-.label-right,
+.labels,
 .label-mid
 {
     margin-top: -20px;
     width:100%;
+    float:left;
 }
 .label-left
 {
@@ -118,16 +123,6 @@ div:after
     background:rgb(70,181,222);
 }
 
-#one-shot,
-#fade-out,
-#sound,
-#tone,
-#speed
-{
-    margin:auto;
-    display:inline-block;
-}
-
 #fade-out,
 #speed
 {
@@ -156,7 +151,6 @@ input[type="checkbox"],
     display:inline-block;
     position: relative;
     line-height: 0;
-    text-align:start;
 }
 
 input[type="checkbox"]:checked
