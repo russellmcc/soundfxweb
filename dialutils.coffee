@@ -14,6 +14,7 @@ define [], ->
       displayInput: no
       angleArc:270
       angleOffset:225
+      fgColor: "#000"
       max: maxDial
       change: (v) ->
         c v/maxDial

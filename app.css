@@ -1,0 +1,179 @@
+body, div,
+h1, h2, h3, h4, h5, h6,
+a, p, blockquote, pre, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, th, td,
+article, aside, figure, footer, header, hgroup, menu, nav, section {
+	margin: 0;
+	padding: 0;
+	border: 0;
+    font-size: 100%;
+    text-decoration: none;
+    font-weight: normal;
+    color:inherit;
+}
+
+body {
+    text-align:center;
+    background: #444;
+    font-family: futura;
+
+}
+
+#container {
+    background: #000;
+    -webkit-user-select: none;
+    text-align:center;
+    max-width: 700px;
+    border-radius:20px;
+    margin:auto;
+    padding-bottom:20px;
+    padding-top:20px;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.inner {
+    color: black;
+    border-radius:30px;
+    display:inline-block;
+    min-height:150px;
+}
+
+span {
+    display:inline;
+}
+
+.knob-label,
+.mixer-label
+{
+    display: inline-block;
+    position:relative;
+    text-align:center;
+    margin: 15px;
+}
+
+.label-left,
+.label-right,
+.label-mid
+{
+    margin-top: -20px;
+}
+
+.label-left
+{
+    float:left;
+}
+.label-right
+{
+    float:right;
+}
+.label-mid
+{
+    float:left;
+    width:100%;
+    margin-right:auto;
+}
+
+.knob-label
+div:after
+{
+    display:block;
+    content: " ";
+    visibility:hidden;
+}
+
+#mixers,
+#sound
+{
+    color: rgb(235, 195, 32);
+}
+
+#mixers-inner,
+#sound-inner
+{
+    background: rgb(235,195,32);
+}
+
+#one-shot,
+#tone
+{
+    color: rgb(70,181,222);
+}
+
+#one-shot-inner,
+#tone-inner
+{
+    background:rgb(70,181,222);
+}
+
+#one-shot,
+#fade-out,
+#sound,
+#tone,
+#speed
+{
+    margin:auto;
+    text-align:left;
+    display:inline-block;
+}
+
+#fade-out,
+#speed
+{
+    color: rgb(105,178,75);
+}
+
+#fade-out-inner,
+#speed-inner
+{
+    background: rgb(105,178,75);
+}
+
+input[type="checkbox"],
+.button
+{
+    -webkit-appearance:none;
+    background:#FFF;
+    width:50px;
+    height:50px;
+    min-width:50px;
+    min-height:50px;
+    border-radius:10px;
+    border:0;
+    margin:10px;
+    padding:0;
+    display:inline-block;
+    position: relative;
+    line-height: 0;
+    text-align:start;
+}
+
+input[type="checkbox"]:checked
+{
+    background:#222;
+}
+
+input[type="checkbox"]:hover
+{
+    background:#DDD;
+}
+
+input[type="checkbox"]:checked:hover
+{
+    background:#444;
+}
+
+.button:hover
+{
+    background:#222;
+}
+.button:active
+{
+    background:#000;
+}
+
+#share {
+    margin:auto;
+    color: white;
+    max-width: 
+}

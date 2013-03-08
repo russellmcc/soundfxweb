@@ -21,6 +21,7 @@ define ["cs!pitchednoise"], (createNoise) -> ->
 
   # this controls the modulation routing from the SLF to the vco.
   vcomod = audio.createGain()
+  vcomod.gain.value = 300
   vcomod.connect vco.frequency
 
   createWaveShaperFromCurve = (curve) ->

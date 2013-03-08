@@ -1,11 +1,11 @@
 require ["cs!remcoaudio", "cs!dialUtils"], (remcoAudio, dial) -> $ ->
 
+  getCheckVal = (sel) -> if ($ sel).attr('checked') then 1 else 0
   getMixerState = ->
-    m = (i) -> Math.pow(2, i) * ~~(($ "#mixer#{i}")[0].value)
+    m = (i) -> Math.pow(2, i) * getCheckVal "#mixer#{i}"
     (m 0) + (m 1) + (m 2)
 
-  getOneShotState = ->
-    ~~($ '#oneshotstate')[0].value
+  getOneShotState = -> getCheckVal '#oneshotstate'
 
   remco = remcoAudio()
 
@@ -15,7 +15,6 @@ require ["cs!remcoaudio", "cs!dialUtils"], (remcoAudio, dial) -> $ ->
     remco.vco,
     [100, 400, 1000, 5000],
     dial.logScale .1, 1
-  dial.paramLink '#vcomod', remco.vcomod, (v) -> 50 + 980 * v
   dial.rangeLink '#slfFreq',
     '#slfRange',
     remco.slf,
@@ -26,12 +25,13 @@ require ["cs!remcoaudio", "cs!dialUtils"], (remcoAudio, dial) -> $ ->
   dial.paramLink '#decay', remco.decay, (dial.logScale .1, 3)
 
   syncMixer = -> remco.setMixerState getMixerState()
-  $('.switch').switchify()
-  $('.mixer').change syncMixer
+  $('.mixer').bind 'change', syncMixer
+  $('.mixer').bind 'click', (e) -> $(e).trigger 'change'
   syncMixer()
 
   syncOneShot = -> remco.setOneShotState getOneShotState()
-  $('#oneshotstate').change syncOneShot
+  $('#oneshotstate').bind 'change', syncOneShot
+  $('#oneshotstate').bind 'click', syncOneShot
   syncOneShot()
   $('#oneshot').click remco.triggerOneShot
 
@@ -40,7 +40,6 @@ require ["cs!remcoaudio", "cs!dialUtils"], (remcoAudio, dial) -> $ ->
     volume: 'v'
     vcoFreq: 'f'
     vcoRange: 'r'
-    vcomod: 'm'
     slfFreq: 'sf'
     slfRange: 'sr'
     noise: 'n'
@@ -57,14 +56,14 @@ require ["cs!remcoaudio", "cs!dialUtils"], (remcoAudio, dial) -> $ ->
     for d,k of dialParams
       dial.setVal "##{d}", p[k]
     for s,k of selectParams
-      ($ "##{s}").val(p[k]).trigger 'change'
+      ($ "##{s}").attr('checked', p[k] > 0).trigger 'change'
 
   createPreset = () ->
     p = {}
     for d,k of dialParams
       p[k] = dial.getVal "##{d}"
     for s,k of selectParams
-      p[k] = ~~($ "##{s}").val()
+      p[k] = getCheckVal "##{s}"
     p
 
   getPresetFromURL = ->
@@ -97,15 +96,13 @@ require ["cs!remcoaudio", "cs!dialUtils"], (remcoAudio, dial) -> $ ->
     p = createPreset()
     p[dialParams[sel[1...sel.length]]] = v
     savePreset p
-  ($ '.switch').change ->
-    savePreset createPreset()
+  ($ '.switch').bind 'change', -> savePreset createPreset()
     
   # sensible defaults
   defaultPreset =
     volume: .2
     vcoFreq: .4
     vcoRange: .5
-    vcomod: .2
     slfFreq: .8
     slfRange: .7
     noise: .6

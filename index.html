@@ -2,38 +2,105 @@
 <html>
 <head>
     <link href='/app.css' rel='stylesheet' type='text/css'/>
-    <link href='/switch.css' rel='stylesheet' type='text/css'/>
 	<script type="text/javascript" data-main="cs!app" src="require-jquery.js"></script>
     <script type="text/javascript" src="jquery.kontrol.js"></script>
-    <script type="text/javascript" src="jquery.switch.js"></script>
 </head>
 <body>
-<input class="dial" type="text" value="5" id="volume"></input>
-<input class="dial" type="text" value="750" id="vcoFreq"></input>
-<input class="dial" type="text" value="750" id="vcoRange"></input>
-<input class="dial" type="text" value="75" id="vcomod"></input>
-<input class="dial" type="text" value="75" id="slfFreq"></input>
-<input class="dial" type="text" value="75" id="slfRange"></input>
-<input class="dial" type="text" value="7500" id="noise"></input>
-<input class="dial" type="text" value="7500" id="attack"></input>
-<input class="dial" type="text" value="7500" id="decay"></input>
-<select class="mixer switch" id="mixer0">
-  <option value="1">On</option>
-  <option value="0">Off</option>
-</select>
-<select class="mixer switch" id="mixer1">
-  <option value="1">On</option>
-  <option value="0">Off</option>
-</select>
-<select class="mixer switch" id="mixer2">
-  <option value="1">On</option>
-  <option value="0">Off</option>
-</select>
-<select class="switch" id="oneshotstate">
-  <option value="1">On</option>
-  <option value="0">Off</option>
-</select>
-<button id="oneshot"></button>
-<span id="shareURL"></span>
+  <div id="container">
+    <div id="mixers">
+      <h2>MIXERS</h2>
+      <div id="mixers-inner" class="inner">
+        <div class="mixer-label">
+          <h3>a</h3>
+          <input type="checkbox" class="mixer switch" id="mixer0"></input>
+        </div>
+        <div class="mixer-label">
+          <h3>b</h3>
+          <input type="checkbox" class="mixer switch" id="mixer1"></input>
+        </div>
+        <div class="mixer-label">
+          <h3>c</h3>
+          <input type="checkbox" class="mixer switch" id="mixer2"></input>
+        </div>
+        <div class="knob-label">
+          <input class="dial" type="text" value="7500" id="volume"></input>
+          <span class="label-left">lo</span>
+          <span class="label-right">hi</span>
+        </div>
+      </div>
+    </div>
+    <div id="one-shot">
+      <h2>ONE SHOT</h2>
+      <div id="one-shot-inner" class="inner">
+        <div class="mixer-label">
+          <h3>on/off</h3>
+          <input type="checkbox" class="switch" id="oneshotstate"></input>
+        </div>
+        <div class="mixer-label">
+          <h3>activator</h3>
+          <div class="button" id="oneshot"></div>  
+        </div>
+        <div class="knob-label">
+          <input class="dial" type="text" value="7500" id="attack"></input>
+          <span class="label-left">short</span>
+          <span class="label-right">long</span>
+        </div>
+      </div>
+    </div>
+    <div id="fade-out">
+      <h2>FADE OUT</h2>
+      <div id="fade-out-inner" class="inner">
+        <div class="knob-label">
+          <input class="dial" type="text" value="7500" id="decay"></input>
+          <span class="label-left">short</span>
+          <span class="label-right">long</span>
+        </div>
+      </div>
+    </div>
+    <div id="speed">
+      <h2>SPEED</h2>
+      <div id="speed-inner" class="inner">
+        <div class="knob-label">
+          <input class="dial" type="text" value="7500" id="vcoRange"></input>
+          <div class="label-mid">range</div>
+        </div>
+        <div class="knob-label">
+          <input class="dial" type="text" value="7500" id="vcoFreq"></input>
+          <span class="label-left">slow</span>
+          <span class="label-right">fast</span>
+        </div>
+      </div>
+    </div>
+    <div id="sound">
+      <h2>SOUND</h2>
+      <div id="sound-inner" class="inner">
+        <div class="knob-label">
+          <input class="dial" type="text" value="7500" id="noise"></input>
+          <span class="label-left">lo</span>
+          <span class="label-right">hi</span>
+        </div>
+      </div>
+    </div>
+    <div id="tone">
+      <h2>TONE</h2>
+      <div id="tone-inner" class="inner">
+        <div class="knob-label">
+          <input class="dial" type="text" value="7500" id="slfRange"></input>
+          <span class="label-mid">range</span>
+        </div>
+        <div class="knob-label">
+          <input class="dial" type="text" value="7500" id="slfFreq"></input>
+          <span class="label-left">lo</span>
+          <span class="label-right">hi</span>
+        </div>
+      </div>
+    </div>
+  </div>
+<div id="share">
+  Share This Sound:
+  <div id="share-inner">
+    <span id="shareURL"></span>
+  </div>
+</div>
 </body>
 </html>
