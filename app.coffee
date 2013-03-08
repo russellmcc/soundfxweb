@@ -1,4 +1,6 @@
-require ["cs!remcoaudio", "cs!dialUtils"], (remcoAudio, dial) -> $ ->
+define ["jquery",
+        "cs!remcoaudio",
+        "cs!dialUtils"], ($, remcoAudio, dial) -> -> $ ->
 
   getCheckVal = (sel) -> if ($ sel).attr('checked') then 1 else 0
   getMixerState = ->
