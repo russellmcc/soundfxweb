@@ -19,6 +19,7 @@ define ["cs!pitchednoise", "cs!safaripatch"], (createNoise, patch) -> ->
   vco = audio.createOscillator()
   patch.oscillator vco
   vco.type = vco.SQUARE
+  vco.frequency.value = 0
   vco.start 0
   
   # this controls the modulation routing from the SLF to the vco.
