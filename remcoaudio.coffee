@@ -78,8 +78,8 @@ define ["cs!pitchednoise", "cs!safaripatch"], (createNoise, patch) -> ->
       when 0 then vco.connect amp
       when 1 then slfAudio.connect amp
       when 2 then noise.connect amp
-      when 3 then doGate noise, vco
-      when 4 then doGate noise, slfAudio
+      when 3 then doGate vco, noise
+      when 4 then doGate slfAudio, noise
       when 5 then doSubGate slfAudio, noise, vco
       when 6 then doGate slfAudio, vco
       # 7 is "off"
