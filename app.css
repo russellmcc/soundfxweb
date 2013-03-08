@@ -1,0 +1,190 @@
+body, div,
+h1, h2, h3, h4, h5, h6,
+a, p, blockquote, pre, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, th, td,
+article, aside, figure, footer, header, hgroup, menu, nav, section {
+	margin: 0;
+	padding: 0;
+	border: 0;
+    font-size: 100%;
+    text-decoration: none;
+    font-weight: normal;
+    color:inherit;
+}
+
+body {
+    background: #444;
+    font-family: futura, comic sans MS, comic sans, marker felt, papyrus, sans-serif;
+    text-align: center;
+}
+
+#container {
+    background: #000;
+    -webkit-user-select: none;
+    max-width: 700px;
+    border-radius:20px;
+    margin:auto;
+    padding-bottom:20px;
+    padding-top:20px;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+#container2 {
+    max-width:700px
+    margin:auto;
+}
+
+.outer
+{
+    display:inline-block;
+    text-align:left;
+}
+
+.inner {
+    color: black;
+    border-radius:30px;
+    display:inline-block;
+    min-height:150px;
+    text-align: center;
+}
+
+span {
+    display:inline;
+}
+
+.knob-label,
+.mixer-label
+{
+    display: inline-block;
+    position:relative;
+    text-align:center;
+    vertical-align:middle;
+    margin: 15px;
+}
+
+.knob-label
+{
+    max-width:100px;
+}
+
+.labels,
+.label-mid
+{
+    margin-top: -20px;
+    width:100%;
+    float:left;
+}
+.label-left
+{
+    float:left;
+    text-align:left;
+}
+.label-right
+{
+    float:right;
+    text-align:right;
+}
+.label-mid
+{
+    float:left;
+    margin-right:auto;
+}
+
+.knob-label
+div:after
+{
+    display:block;
+    content: " ";
+    visibility:hidden;
+}
+
+#mixers,
+#sound
+{
+    color: rgb(235, 195, 32);
+}
+
+#mixers-inner,
+#sound-inner
+{
+    background: rgb(235,195,32);
+}
+
+#one-shot,
+#tone
+{
+    color: rgb(70,181,222);
+}
+
+#one-shot-inner,
+#tone-inner
+{
+    background:rgb(70,181,222);
+}
+
+#fade-out,
+#speed
+{
+    color: rgb(105,178,75);
+}
+
+#fade-out-inner,
+#speed-inner
+{
+    background: rgb(105,178,75);
+}
+
+input[type="checkbox"],
+.button
+{
+    -webkit-appearance:none;
+    background:#FFF;
+    width:50px;
+    height:50px;
+    min-width:50px;
+    min-height:50px;
+    border-radius:10px;
+    border:0;
+    margin:10px;
+    padding:0;
+    display:inline-block;
+    position: relative;
+    line-height: 0;
+}
+
+input[type="checkbox"]:checked
+{
+    background:#222;
+}
+
+input[type="checkbox"]:hover
+{
+    background:#DDD;
+}
+
+input[type="checkbox"]:checked:hover
+{
+    background:#444;
+}
+
+.button:hover
+{
+    background:#222;
+}
+.button:active
+{
+    background:#000;
+}
+
+#share {
+    margin:auto;
+    width:50%;
+    color: white;
+    text-align: left;
+}
+
+#share-inner {
+    overflow:scroll;
+    white-space:pre;
+}
