@@ -1,6 +1,6 @@
 define [], ->
   e = {} # exports
-  maxDial = 10000
+  maxDial = 100
 
   e.getVal = (sel) ->
     v = ($ sel)?[0]?.value
