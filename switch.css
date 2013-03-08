@@ -1,0 +1,93 @@
+.ui-switch {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.ui-switch-middle {
+  height: 20px; width: 60px;
+  border: solid 7px white;
+  position: relative;
+  margin-top: -34px;
+  z-index: 100;
+}
+
+.ui-switch-mask {
+  height: 30px;
+  margin: 2px 4px;
+  overflow: hidden;
+}
+
+.ui-switch-master {
+  height: 24px;
+  position: relative;
+  left: 10px;
+}
+
+.ui-switch-upper {
+  height: 20px; width: auto;
+  margin: 5px;
+  position: absolute;
+  z-index: 101;
+}
+
+.ui-switch-handle {
+  display: block;
+  height: 30px; width: 30px;
+  position: absolute;
+  top: -4px; left: -15px;
+  background-size: 30px 30px;
+}
+
+.ui-switch-.disabled .ui-switch-handle:after {
+  display: block;
+  content: ' ';
+  position: absolute;
+  top: 0; left: 0;
+  height: 30px; width: 30px;
+  background: white;
+  
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /* IE 8 */
+  filter: alpha(opacity=50); /* IE 5-7 */
+  -moz-opacity: 0.5; /* Mozilla */
+  -khtml-opacity: 0.5; /* Safari 1.x */
+  opacity: 0.5; /* Good browsers */
+}
+
+.ui-switch-lower {
+  height: 20px; width: 1000px;
+  margin: 5px;
+  position: absolute;
+  z-index: 99;
+}
+
+.ui-switch-labels {
+  clear: both;
+}
+
+.ui-switch-on,
+.ui-switch-off {
+  display: block;
+  float: left;
+  line-height: 18px;
+  font-size: 12px;
+  color: white;
+  padding: 0 10px;
+  text-align: center;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.ui-switch-on {
+  border-right: none;
+  border-color: #006600;
+  padding-right: 20px;
+  background: #0b9a15;
+}
+
+.ui-switch-off {
+  border-left: none;
+  border-color: #660000;
+  padding-left: 20px;
+  background: #9c1010;
+}

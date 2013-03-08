@@ -26,6 +26,7 @@ require ["cs!remcoaudio", "cs!dialUtils"], (remcoAudio, dial) -> $ ->
   dial.paramLink '#decay', remco.decay, (dial.logScale .1, 3)
 
   syncMixer = -> remco.setMixerState getMixerState()
+  $('.switch').switchify()
   $('.mixer').change syncMixer
   syncMixer()
 
