@@ -116,4 +116,5 @@ define ["cs!pitchednoise", "cs!safaripatch"], (createNoise, patch) -> ->
     setMixerState: setMixerState
     setOneShotState: setOneShotState
     triggerOneShot: triggerOneShot
+    audio: audio
   }

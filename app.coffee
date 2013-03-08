@@ -130,4 +130,20 @@ define ["jquery",
 
   applyPreset preset
 
+  iOSDevs = [ 'iPad'
+            , 'iPod'
+            , 'iPhone'
+            ]
+  iOS = no
+  for d in iOSDevs
+    (iOS = yes) if navigator.platform is d
+
+  ($ '#touchToStart').hide() unless iOS
+  if iOS
+    ($ '#touchToStart')[0].onclick = ->
+      tempO = remco.audio.createOscillator()
+      tempO.noteOn 0
+      tempO.noteOff 0
+      ($ '#touchToStart').hide()
+
   ($ '#loading').hide()
