@@ -16,7 +16,7 @@ body {
     font-family: futura, comic sans MS, comic sans, marker felt, papyrus, sans-serif;
     text-align: center;
 }
-#container {
+#machine {
     background: #000;
     -webkit-user-select: none;
     max-width: 700px;
@@ -27,7 +27,24 @@ body {
     margin-top:20px;
     margin-bottom:20px;
 }
-#container2 {
+#loading {
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0px;
+    left:0px;
+    background: #000;
+    text-align:center;
+    z-index:1000;
+    color: #FFF;
+}
+#loadingTxt {
+    display:inline-block;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+}
+#container {
     max-width:700px
     margin:auto;
 }
