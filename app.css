@@ -32,11 +32,17 @@ body {
     margin-bottom:20px;
 }
 
+#container2 {
+    max-width:700px
+    margin:auto;
+}
+
 .inner {
     color: black;
     border-radius:30px;
     display:inline-block;
     min-height:150px;
+    text-algin: center;
 }
 
 span {
@@ -52,25 +58,31 @@ span {
     margin: 15px;
 }
 
+.knob-label
+{
+    max-width:100px;
+}
+
 .label-left,
 .label-right,
 .label-mid
 {
     margin-top: -20px;
+    width:100%;
 }
-
 .label-left
 {
     float:left;
+    text-align:left;
 }
 .label-right
 {
     float:right;
+    text-align:right;
 }
 .label-mid
 {
     float:left;
-    width:100%;
     margin-right:auto;
 }
 
@@ -113,7 +125,6 @@ div:after
 #speed
 {
     margin:auto;
-    text-align:left;
     display:inline-block;
 }
 
@@ -174,6 +185,12 @@ input[type="checkbox"]:checked:hover
 
 #share {
     margin:auto;
+    width:50%;
     color: white;
-    max-width: 
+    text-align: left;
+}
+
+#share-inner {
+    overflow:scroll;
+    white-space:pre;
 }

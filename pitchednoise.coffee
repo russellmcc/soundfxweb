@@ -5,7 +5,7 @@ define [], ->
   
   (audio) ->
     # this controls the "frequency" of the noise.
-    n = audio.createScriptProcessor(1024, 0, 1)
+    n = audio.createScriptProcessor(1024, 1, 1)
     n._out = 0
     n._phasor = 0
     n.frequency = {value: 100}
@@ -17,7 +17,7 @@ define [], ->
 
       channels = for i in [0...buffer.numberOfChannels]
         buffer.getChannelData(i)
-        
+                        
       for i in [0...buffer.length]
         n._phasor += 1
         if n._phasor > period

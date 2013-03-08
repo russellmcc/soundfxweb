@@ -15,6 +15,7 @@ define [], ->
       angleArc:270
       angleOffset:225
       fgColor: "#000"
+      noScroll: yes
       max: maxDial
       change: (v) ->
         c v/maxDial

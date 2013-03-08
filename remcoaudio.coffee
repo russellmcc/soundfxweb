@@ -2,8 +2,9 @@
 # This module returns a function that creates an audio context
 # for the remco soundfxmachine
 #
-define ["cs!pitchednoise"], (createNoise) -> ->
+define ["cs!pitchednoise", "cs!safaripatch"], (createNoise, patch) -> ->
   audio = new webkitAudioContext()
+  patch.context audio
 
   # final gain stage
   output = audio.createGain()
@@ -16,13 +17,17 @@ define ["cs!pitchednoise"], (createNoise) -> ->
   # this represents the main VCO of the remco.
   # it's a square wave.
   vco = audio.createOscillator()
+  patch.oscillator vco
   vco.type = vco.SQUARE
   vco.start 0
-
+  
   # this controls the modulation routing from the SLF to the vco.
   vcomod = audio.createGain()
   vcomod.gain.value = 300
-  vcomod.connect vco.frequency
+  # goddamn safari.
+  vcooffset = patch.createOffset audio
+  vcomod.connect vcooffset
+  vcooffset.connect vco.frequency
 
   createWaveShaperFromCurve = (curve) ->
     n = audio.createWaveShaper()
@@ -34,6 +39,7 @@ define ["cs!pitchednoise"], (createNoise) -> ->
 
   # this is the so-called "super low frequency" oscillator
   slf = audio.createOscillator()
+  patch.oscillator slf
   slf.type = slf.TRIANGLE
   slf.connect vcomod
   slf.connect slfAudio
@@ -100,7 +106,7 @@ define ["cs!pitchednoise"], (createNoise) -> ->
   # return a collection of exposed parameters
   {
     volume: output.gain
-    vco: vco.frequency
+    vco: vcooffset.offset
     slf: slf.frequency
     vcomod: vcomod.gain
     noise: noise.frequency
