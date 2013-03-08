@@ -4,7 +4,7 @@ rm -rf publish/
 git clone -b gh-pages git@github.com:russellmcc/soundfxweb.git publish
 cd publish/
 rm -rf *
-cp -R ../build/*
+cp -R ../build/* .
 git add *
 git commit -m "publishing"
 git push
