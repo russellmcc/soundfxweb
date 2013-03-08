@@ -46,7 +46,7 @@ body {
     display:inline-block;
     position: absolute;
     top: 50%;
-    width: 100%;
+    left:50%;
 }
 
 #container {
