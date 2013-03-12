@@ -1,8 +1,8 @@
 body, div,
 h1, h2, h3, h4, h5, h6,
 a, p, blockquote, pre, dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend, th, td,
-article, aside, figure, footer, header, hgroup, menu, nav, section {
+fieldset, form, label, legend, th, td, input, 
+article, aside, figure, footer, header, hgroup, menu, nav, section, button{
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -10,6 +10,10 @@ article, aside, figure, footer, header, hgroup, menu, nav, section {
     text-decoration: none;
     font-weight: normal;
     color:inherit;
+    font-family:inherit;
+    appearance: none;
+    -webkit-appearance: none;
+    background:transparent;
 }
 
 body {
@@ -160,7 +164,6 @@ div:after
 input[type="checkbox"],
 .button
 {
-    -webkit-appearance:none;
     background:#FFF;
     width:50px;
     height:50px;
@@ -174,6 +177,12 @@ input[type="checkbox"],
     position: relative;
     line-height: 0;
 }
+
+#download:hover
+{
+    color:#777;
+}
+
 
 input[type="checkbox"]:checked
 {

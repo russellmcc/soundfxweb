@@ -2,7 +2,8 @@ define ["jquery",
         "cs!remcoaudio",
         "cs!dialUtils",
         "cs!checkUtils",
-        "cs!models/preset"], ($, remcoAudio, dial, check, preset) -> -> $ ->
+        "cs!models/preset",
+        "cs!recorder"], ($, remcoAudio, dial, check, preset, rec) -> -> $ ->
 
   # sensible defaults
   defaultPreset =
@@ -61,6 +62,27 @@ define ["jquery",
   check.modelLink "##{c}", currPreset, c for c in checkParams
   
   $('#oneshot').click remco.triggerOneShot
+
+  # set up the WAV recording.
+  ($ '#download')[0].onclick = ->
+    renderC = wavContext remco.attack.value + remco.decay.value
+    o = renderC.createOscillator()
+    o.type = o.SINE
+    o.connect renderC.destination
+    o.start 0
+    # renderRemco = remcoAudio renderC
+    # for k,v of remco
+    #   renderRemco[k].value = v.value if v.value?
+    # renderRemco.setOneShotState no
+    # renderRemco.setMixerState getMixerState()
+    renderC.renderWav (blob) ->
+      url = (URL ? webkitURL).createObjectURL blob
+      link = window.document.createElement 'a'
+      link.href = url
+      link.download = 'soundfx.wav'
+      click = document.createEvent 'Event'
+      click.initEvent 'click', true, true
+      link.dispatchEvent click
 
   # hide for iOS until the user clicks to enable audio.
   iOSDevs = [ 'iPad'
