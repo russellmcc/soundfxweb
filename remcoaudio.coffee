@@ -2,8 +2,7 @@
 # This module returns a function that creates an audio context
 # for the remco soundfxmachine
 #
-define ["cs!pitchednoise", "cs!safaripatch"], (createNoise, patch) -> ->
-  audio = new webkitAudioContext()
+define ["cs!pitchednoise", "cs!safaripatch"], (createNoise, patch) -> (audio) ->
   patch.context audio
 
   # final gain stage

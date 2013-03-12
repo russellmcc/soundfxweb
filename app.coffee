@@ -9,7 +9,8 @@ define ["jquery",
 
   getOneShotState = -> getCheckVal '#oneshotstate'
 
-  remco = remcoAudio()
+  audio = new webkitAudioContext()
+  remco = remcoAudio(audio)
 
   dial.paramLink '#volume', remco.volume
   dial.rangeLink '#vcoFreq',
