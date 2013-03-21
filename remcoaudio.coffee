@@ -25,9 +25,7 @@ define ["cs!pitchednoise", "cs!safaripatch"], (createNoise, patch) -> (audio) ->
   vcomod = audio.createGain()
   vcomod.gain.value = 300
   # goddamn safari.
-  vcooffset = patch.createOffset audio
-  vcomod.connect vcooffset
-  vcooffset.connect vco.frequency
+  vcooffset = patch.createParamModulation audio, vco.frequency, vcomod
 
   createWaveShaperFromCurve = (curve) ->
     n = audio.createWaveShaper()
@@ -106,7 +104,7 @@ define ["cs!pitchednoise", "cs!safaripatch"], (createNoise, patch) -> (audio) ->
   # return a collection of exposed parameters
   {
     volume: output.gain
-    vco: vcooffset.offset
+    vco: vcooffset
     slf: slf.frequency
     vcomod: vcomod.gain
     noise: noise.frequency
