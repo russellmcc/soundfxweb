@@ -2,7 +2,11 @@
 # This module returns a function that creates an audio context
 # for the remco soundfxmachine
 #
-define ["cs!pitchednoise", "cs!safaripatch"], (createNoise, patch) -> (audio) ->
+# it requires an audio context,
+# and a backbone Model representing the current preset.
+#
+define ["cs!pitchednoise", "cs!safaripatch", "cs!bindings"],
+(createNoise, patch, bindings) -> (audio, preset) ->
   patch.context audio
 
   # final gain stage
@@ -55,7 +59,10 @@ define ["cs!pitchednoise", "cs!safaripatch"], (createNoise, patch) -> (audio) ->
   
   noise = createNoise audio
 
-  setMixerState = (state) ->
+  setMixerState = (m0, m1, m2) ->
+    a = arguments
+    m = (i) -> Math.pow(2, i) * a[i]
+    state = _.foldl(m x for x in [0..2], ((a, b) -> a + b), 0)
     vco.disconnect()
     slfAudio.disconnect()
     noise.disconnect()
@@ -82,36 +89,31 @@ define ["cs!pitchednoise", "cs!safaripatch"], (createNoise, patch) -> (audio) ->
       when 6 then doGate slfAudio, vco
       # 7 is "off"
 
-  oneShotState = off
   setOneShotState = (oneShot) ->
-    oneShotState = oneShot
-    if oneShot
-      amp.gain.cancelScheduledValues audio.currentTime
-      amp.gain.setValueAtTime 0, audio.currentTime
-    else
-      amp.gain.cancelScheduledValues audio.currentTime
-      amp.gain.setValueAtTime 1, audio.currentTime
+    console.log oneShot
+    amp.gain.cancelScheduledValues audio.currentTime
+    amp.gain.setValueAtTime 1 - oneShot, audio.currentTime
 
-  attack = {value: 1}
-  decay = {value: 1}
   triggerOneShot = ->
-    if oneShotState
+    if preset.get 'oneshotstate'
       amp.gain.setValueAtTime 0, audio.currentTime
-      amp.gain.linearRampToValueAtTime 1, audio.currentTime + attack.value
+      a = preset.get 'attack'
+      d = preset.get 'decay'
+      amp.gain.linearRampToValueAtTime 1, audio.currentTime + a
       amp.gain.linearRampToValueAtTime 0,
-        audio.currentTime + attack.value + decay.value
-  
+        audio.currentTime + a + d
+
+  b = new bindings preset
+  b.bindParam 'volume', output.gain
+  b.bindParam 'noise', noise.frequency, bindings.logScale 50, 10000
+  b.bindRange 'slfFreq', 'slfRange', slf.frequency,
+    [1,10,100,5000], bindings.logScale .1, 1
+  b.bindRange 'vcoFreq', 'vcoRange', vcooffset,
+    [100,400,1000,5000], bindings.logScale .1, 1
+  b.bindFunc ("mixer#{i}" for i in [0..2]), setMixerState
+  b.bindFunc ['oneshotstate'], setOneShotState
+
   # return a collection of exposed parameters
   {
-    volume: output.gain
-    vco: vcooffset
-    slf: slf.frequency
-    vcomod: vcomod.gain
-    noise: noise.frequency
-    attack: attack
-    decay: decay
-    setMixerState: setMixerState
-    setOneShotState: setOneShotState
     triggerOneShot: triggerOneShot
-    audio: audio
   }
