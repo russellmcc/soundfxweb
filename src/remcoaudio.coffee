@@ -90,7 +90,6 @@ define ["cs!pitchednoise", "cs!safaripatch", "cs!bindings"],
       # 7 is "off"
 
   setOneShotState = (oneShot) ->
-    console.log oneShot
     amp.gain.cancelScheduledValues audio.currentTime
     amp.gain.setValueAtTime 1 - oneShot, audio.currentTime
 

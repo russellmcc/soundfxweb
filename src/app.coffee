@@ -20,11 +20,11 @@ define ["jquery",
     mixer2: 1
 
   currPreset = new preset defaultPreset
-  currPreset.updateFromLocalStorage()
+  currPreset.loadFromLocalStorage()
   do ->
     href = window.location.href
-    qs = (href.slice (href.indexOf '?') + 1)
-    currPreset.updateFromString qs
+    i = href.indexOf '?'
+    currPreset.loadFromString (href.slice i + 1) if i > 0
    
   audio = new webkitAudioContext
   remco = remcoAudio audio, currPreset
@@ -33,7 +33,7 @@ define ["jquery",
     currPreset.saveToLocalStorage()
     href = window.location.href
     i = href.indexOf '?'
-    href = href[0...i] if i?
+    href = href[0...i] if i > 0
     href += "?#{currPreset.saveToString()}"
     ($ '#shareURL').html(href)
 
