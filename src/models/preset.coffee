@@ -13,7 +13,11 @@ define [], ->
       noise: 'n'
       attack: 'a'
       decay: 'd'
-
+      mixer0: 'm0'
+      mixer1: 'm1'
+      mixer2: 'm2'
+      oneshotstate: 'o'
+      
     loadFromLocalStorage: ->
       c = {}
       for k, mk of @minAttrs
