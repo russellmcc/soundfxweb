@@ -1,8 +1,8 @@
 define [], ->
   Backbone.Model.extend
-    initialize:
+    initialize: () ->
       @attrsMin = {}
-      ([mk] = k) for k, mk in @minAttrs
+      (@attrsMin[mk] = k) for k, mk of @minAttrs
         
     minAttrs:
       volume: 'v'
@@ -16,11 +16,11 @@ define [], ->
 
     loadFromLocalStorage: ->
       c = {}
-      for k, mk in @minAttrs
+      for k, mk of @minAttrs
         c[k] = localStorage[mk] if localStorage[mk]?
       @set c
+
     loadFromString: (s) ->
-      console.log s
       c = {}
       qs = s.split '&'
       for q in qs
@@ -31,12 +31,12 @@ define [], ->
       @set c
 
     saveToLocalStorage: ->
-      for k, v in @attributes
+      for k, v of @attributes
         localStorage[@minAttrs[k]] = v if @minAttrs[k]?
 
     saveToString: ->
       s = []
       e = encodeURIComponent
-      for k, v in @attributes
-        s.push "#{e @minAttrs[k]} = {e v}" if @minAttrs[k]
+      for k, v of @attributes
+        s.push "#{e @minAttrs[k]}=#{e v}" if @minAttrs[k]
       s.join '&'
