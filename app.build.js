@@ -1,9 +1,9 @@
 ({
-    baseUrl: ".",
+    baseUrl: "src",
     paths: {
         "jquery": "require-jquery"
     },
-    dir: "build",
+    dir: "build/src",
     stubModules: ['cs'],
     modules: [
         {
