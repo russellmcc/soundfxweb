@@ -8,11 +8,9 @@ define [], -> (length)->
       # based on code from https://github.com/mattdiamond/Recorderjs
       # see COPYING for details
       data = new Int16Array samples.length
-      console.log samples
       for i in [0...samples.length]
         s = samples[i]
         data[i] = if s < 0 then s * 0x8000 else s * 0x7FFF
-      console.log data
       bb = new Blob [
         'RIFF'
         # length of file after this point
