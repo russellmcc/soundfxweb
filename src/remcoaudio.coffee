@@ -98,7 +98,7 @@ define ["cs!pitchednoise", "cs!safaripatch", "cs!bindings"],
   
   triggerOneShot = ->
     if preset.get 'oneshotstate'
-      a = attack.vaue
+      a = attack.value
       d = decay.value
       amp.gain.setValueAtTime 0, audio.currentTime
       amp.gain.linearRampToValueAtTime 1, audio.currentTime + a
@@ -120,7 +120,5 @@ define ["cs!pitchednoise", "cs!safaripatch", "cs!bindings"],
   # return a collection of exposed parameters
   {
     triggerOneShot: triggerOneShot
-    getLength: ->
-      console.log attack.value + decay.value
-      attack.value + decay.value
+    getLength: -> attack.value + decay.value
   }
