@@ -65,7 +65,7 @@ define ["jquery",
 
   # set up the WAV recording.
   ($ '#download')[0].onclick = ->
-    renderC = wavContext remco.attack.value + remco.decay.value
+    renderC = rec remco.getLength()
     o = renderC.createOscillator()
     o.type = o.SINE
     o.connect renderC.destination
