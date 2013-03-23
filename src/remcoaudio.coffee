@@ -93,11 +93,14 @@ define ["cs!pitchednoise", "cs!safaripatch", "cs!bindings"],
     amp.gain.cancelScheduledValues audio.currentTime
     amp.gain.setValueAtTime 1 - oneShot, audio.currentTime
 
+  attack = value: 1
+  decay = value: 1
+  
   triggerOneShot = ->
     if preset.get 'oneshotstate'
+      a = attack.vaue
+      d = decay.value
       amp.gain.setValueAtTime 0, audio.currentTime
-      a = preset.get 'attack'
-      d = preset.get 'decay'
       amp.gain.linearRampToValueAtTime 1, audio.currentTime + a
       amp.gain.linearRampToValueAtTime 0,
         audio.currentTime + a + d
@@ -105,6 +108,8 @@ define ["cs!pitchednoise", "cs!safaripatch", "cs!bindings"],
   b = new bindings preset
   b.bindParam 'volume', output.gain
   b.bindParam 'noise', noise.frequency, bindings.logScale 50, 10000
+  b.bindParam 'attack', attack, bindings.logScale .1, 3
+  b.bindParam 'decay', decay, bindings.logScale .1, 3
   b.bindRange 'slfFreq', 'slfRange', slf.frequency,
     [1,10,100,5000], bindings.logScale .1, 1
   b.bindRange 'vcoFreq', 'vcoRange', vcooffset,
@@ -115,4 +120,7 @@ define ["cs!pitchednoise", "cs!safaripatch", "cs!bindings"],
   # return a collection of exposed parameters
   {
     triggerOneShot: triggerOneShot
+    getLength: ->
+      console.log attack.value + decay.value
+      attack.value + decay.value
   }
