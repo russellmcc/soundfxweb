@@ -66,15 +66,10 @@ define ["jquery",
   # set up the WAV recording.
   ($ '#download')[0].onclick = ->
     renderC = rec remco.getLength()
-    o = renderC.createOscillator()
-    o.type = o.SINE
-    o.connect renderC.destination
-    o.start 0
-    # renderRemco = remcoAudio renderC
-    # for k,v of remco
-    #   renderRemco[k].value = v.value if v.value?
-    # renderRemco.setOneShotState no
-    # renderRemco.setMixerState getMixerState()
+    renderPreset = currPreset.clone()
+    renderPreset.set 'oneshotstate', 1
+    renderRemco = remcoAudio renderC, renderPreset
+    renderRemco.triggerOneShot()
     renderC.renderWav (blob) ->
       url = (URL ? webkitURL).createObjectURL blob
       link = window.document.createElement 'a'
