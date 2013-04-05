@@ -2,9 +2,9 @@
 # a backbone model to audio params.
 define [], ->
   class Bindings
-    constructor: (@model) ->
+    constructor: ->
       @binds = []
-      @model.on 'change', @change, @
+      _.extend @, Backbone.Events
 
     # primative that binds a group of model params
     # to a function - if the any were changed, the
@@ -12,11 +12,10 @@ define [], ->
     #
     # c is the context at which to call the function.
     bindFunc: (ps, f, c) ->
-      @binds.push {ps: ps, f: f, c: c}
-      # if everything's ready, call it now.
-      if (_.all ps, (p) => (@model.get p)?)
-        f.apply c, ((@model.get p) for p in ps)
-        
+      b = {ps: ps, f: f, c: c}
+      @binds.push b
+      @sync b
+      
     # directly binds a parameter.
     bindParam: (modelParam, audioParam, scale) ->
       scale ?= (v) -> v
@@ -39,9 +38,22 @@ define [], ->
         audioParam.value = ranges[range] * baseScale base
       @bindFunc [baseParam, rangeParam], set
 
+    sync: (b) ->
+      if not b?
+        (@sync b) for b in @binds
+      else
+        # if everything's ready, call it now.
+        if (_.all b.ps, (p) => (@model?.get p)?)
+          b.f.apply b.c, ((@model.get p) for p in b.ps)
+
     # callback
     change: (e) ->
       for b in @binds
         if (_.any b.ps, (p) -> e.changed[p]?) and
            (_.all b.ps, (p) -> (e.get p)?)
           b.f.apply b.c, ((e.get p) for p in b.ps)
+
+    bindPreset: (@model) ->
+      @stopListening()
+      @listenTo @model, 'change', @change
+      @sync()

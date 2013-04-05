@@ -105,7 +105,7 @@ define ["cs!pitchednoise", "cs!safaripatch", "cs!bindings"],
       amp.gain.linearRampToValueAtTime 0,
         audio.currentTime + a + d
 
-  b = new bindings preset
+  b = new bindings
   b.bindParam 'volume', output.gain
   b.bindParam 'noise', noise.frequency, bindings.logScale 50, 10000
   b.bindParam 'attack', attack, bindings.logScale .1, 3
@@ -116,7 +116,8 @@ define ["cs!pitchednoise", "cs!safaripatch", "cs!bindings"],
     [100,400,1000,5000], bindings.logScale .1, 1
   b.bindFunc ("mixer#{i}" for i in [0..2]), setMixerState
   b.bindFunc ['oneshotstate'], setOneShotState
-
+  b.bindPreset preset
+  
   # return a collection of exposed parameters
   {
     triggerOneShot: triggerOneShot
